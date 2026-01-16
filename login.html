@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login | Your App Name</title>
+    <!-- Use a modern, accessible CSS system for zero-friction sign-in -->
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <main class="login-container">
+        <form id="loginForm" action="/api/login" method="POST" novalidate>
+            <h1>Sign In</h1>
+            <p>Welcome back! Please enter your details.</p>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <!-- autocomplete="username" helps password managers -->
+                <input type="email" id="email" name="email" 
+                       placeholder="you@example.com" required 
+                       autocomplete="username">
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" 
+                           required autocomplete="current-password">
+                    <button type="button" id="togglePassword" aria-label="Show password">
+                        👁️
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="checkbox-container">
+                    <input type="checkbox" name="remember"> Remember me
+                </label>
+                <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn-primary">Sign In</button>
+
+            <p class="signup-nudge">
+                Don't have an account? <a href="/signup">Create one now</a>
+            </p>
+        </form>
+    </main>
+
+    <script>
+        // Password Visibility Toggle
+        const toggleBtn = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        toggleBtn.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+            toggleBtn.textContent = isPassword ? '🙈' : '👁️';
+        });
+
+        // Form Submission with basic validation
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            // Add your authentication logic here
+            console.log("Attempting login...");
+        });
+    </script>
+</body>
+</html>
