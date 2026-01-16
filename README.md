@@ -4,7 +4,7 @@ This is going to be an Android System WebView™ application, with group functio
 I will later develop it for Windows.
 
 ---
-### References:
-[Flaticon.com](https://flaticon.com/), [Vecteezy.com](https://vecteezy.com/)
+### *References:*
+*[Flaticon.com](https://flaticon.com/), [Vecteezy.com](https://vecteezy.com/)*
 
-Android is a trademark of Google LLC.
+*Android is a trademark of Google LLC.*
