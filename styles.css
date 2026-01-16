@@ -1,6 +1,7 @@
  .dark .menu {
     left: 20px;
     box-shadow: #515151;
+    box-shadow: 10px;
     background: #606060;
     font-size: 25px;
  }
