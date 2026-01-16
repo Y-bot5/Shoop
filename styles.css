@@ -1,3 +1,11 @@
  .dark .menu {
-    left: 10px;
+    left: 20px;
+    box-shadow: #515151;
+    background: #606060;
+    font-size: 25px;
+ }
+
+ .dark .menu:hover {
+    box-shadow: #626262;
+    background: #7d7d7d;
  }
