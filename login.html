@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login | Your App Name</title>
+    <title>Login | Shoop</title>
     <!-- Use a modern, accessible CSS system for zero-friction sign-in -->
     <link rel="stylesheet" href="styles.css"> 
 </head>
@@ -27,7 +27,7 @@
                     <input type="password" id="password" name="password" 
                            required autocomplete="current-password">
                     <button type="button" id="togglePassword" aria-label="Show password">
-                        👁️
+                        <img class="showPassword" src="passwordShow.webp" alt="Show password">
                     </button>
                 </div>
             </div>
@@ -56,7 +56,7 @@
             const isPassword = passwordInput.type === 'password';
             passwordInput.type = isPassword ? 'text' : 'password';
             toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-            toggleBtn.textContent = isPassword ? '🙈' : '👁️';
+            toggleBtn.textContent = isPassword ? toggleBtn.innerHTML = "<img id=\"hidePassword\" src=\"passwordHide.webp\" alt=\"Hide password\">" : toggleBtn.innerHTML = "<img class=\"showPassword\" src=\"passwordShow.webp\" alt=\"Show password\">";
         });
 
         // Form Submission with basic validation
