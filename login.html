@@ -16,6 +16,11 @@ onAuthStateChanged(auth, user => {
 </script>
 
     <script type="module">
+        await signInWithEmailAndPassword(auth, email, password);
+
+// redirect after success
+window.location.replace("/Shoop/index.html");
+
         import { sendEmailVerification } from "firebase/auth";
 sendEmailVerification(auth.currentUser);
 
