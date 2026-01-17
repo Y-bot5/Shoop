@@ -51,8 +51,8 @@ const form = document.getElementById("loginForm");
 form.addEventListener("submit", async (e) => {
   e.preventDefault(); // 🚨 stops /api/login
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value;
 
   try {
     // 🔐 Authenticate with Firebase
