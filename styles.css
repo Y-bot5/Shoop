@@ -10,6 +10,13 @@
     background: #7d7d7d;
  }
 
-.dark * {
-   background: #0f0000
+.dark html {
+   background: #898989
+}
+
+#noProfile {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%; /* makes it round */
+  object-fit: cover; /* prevents stretching */
 }
