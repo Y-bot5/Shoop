@@ -22,16 +22,16 @@
   <input id="email" type="email" required placeholder="Email" autocomplete="email">
   <input id="password" type="password" required placeholder="Password" autocomplete="current-password">
   <button type="submit">Login</button>
-</form>
-
-    <script type="module">
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
+// 🔹 Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyD6bBqUlQe32d7dZRmJane3gAsttTCZyPs",
   authDomain: "shoop-hu4f.firebaseapp.com",
@@ -44,34 +44,48 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-const form = document.getElementById("loginForm");
+// 🔹 Grab form elements
+const loginForm = document.getElementById("loginForm");
 const emailInput = document.getElementById("email");
 const passwordInput = document.getElementById("password");
 
-form.addEventListener("submit", async (e) => {
+// 🔹 Form submit handler
+loginForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
   try {
-    // Try to sign in
+    // 1️⃣ Try signing in
     await signInWithEmailAndPassword(auth, email, password);
 
   } catch (err) {
-    // If user doesn't exist, create it
-    if (
-      err.code === "auth/user-not-found" ||
-      err.code === "auth/invalid-credential"
-    ) {
-      await createUserWithEmailAndPassword(auth, email, password);
+    // 2️⃣ If user doesn't exist → create account
+    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+        // Optional: set display name to email prefix
+        await updateProfile(userCredential.user, {
+          displayName: email.split("@")[0]
+        });
+
+      } catch (createErr) {
+        alert(`Error creating account: ${createErr.message}`);
+        return;
+      }
+
+    } else if (err.code === "auth/wrong-password") {
+      alert("Incorrect password.");
+      return;
     } else {
-      alert(err.code);
+      alert(`Login error: ${err.message}`);
       return;
     }
   }
 
-  // Redirect after login or signup
+  // ✅ Successfully logged in or account created → redirect
   window.location.replace("/Shoop/index.html");
 });
 </script>
