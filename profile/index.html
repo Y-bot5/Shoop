@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<h1 id="status">Loading...</h1>
+
+<p><strong>Name:</strong> <span id="name"></span></p>
+<p><strong>Email:</strong> <span id="email"></span></p>
+
+<button id="logout">Log out</button>
+
+<script type="module">
+import { auth } from "/Shoop/firebase.js";
+import {
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+
+const status = document.getElementById("status");
+const nameEl = document.getElementById("name");
+const emailEl = document.getElementById("email");
+const logoutBtn = document.getElementById("logout");
+
+onAuthStateChanged(auth, user => {
+if (!user) {
+// Not logged in → go to login
+location.replace("/Shoop/login.html");
+return;
+}
+
+// Logged in
+status.textContent = "Profile";
+nameEl.textContent = user.displayName || "(no name)";
+emailEl.textContent = user.email;
+});
+
+logoutBtn.onclick = async () => {
+await signOut(auth);
+location.replace("/Shoop/login.html");
+};
+</script>
+</body>
+</html>
