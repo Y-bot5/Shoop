@@ -1,3 +1,7 @@
-.showPassword {
-    size: 15px;
+.dark body {
+    background: #898989;
+}
+
+.light body {
+    background: #eee;
 }
