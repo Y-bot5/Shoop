@@ -27,6 +27,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebas
 import {
   getAuth,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -41,22 +42,34 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-loginForm.addEventListener("submit", async (e) => {
+const form = document.getElementById("loginForm");
+const emailInput = document.getElementById("emailInput");
+const passwordInput = document.getElementById("passwordInput");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const email = emailInput.value.trim();
   const password = passwordInput.value;
 
   try {
-    // 🔐 Try to log in
+    // Try to sign in
     await signInWithEmailAndPassword(auth, email, password);
 
-  } else {
-      throw err; // real error
+  } catch (err) {
+    // If user doesn't exist, create it
+    if (
+      err.code === "auth/user-not-found" ||
+      err.code === "auth/invalid-credential"
+    ) {
+      await createUserWithEmailAndPassword(auth, email, password);
+    } else {
+      alert(err.code);
+      return;
     }
   }
 
-  // ✅ Logged in (either way)
+  // Redirect after login or signup
   window.location.replace("/Shoop/index.html");
 });
 </script>
