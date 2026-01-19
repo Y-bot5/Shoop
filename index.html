@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/Shoop/styles.css">
 
-    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" href="/Shoop/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="128x128" href="icon-128.png">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
@@ -26,63 +26,29 @@
   </head>
   <body>
     <button id="menu">≡</button>
-      <a id="profileLink" href="/Shoop/login.html">
-  <img src="noProfile.webp" alt="Profile or login" id="noProfile">
-</a>
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
+    <header>
+                    <a id="profileLink" href="/Shoop/login.html">
+                                      <img src="/Shoop/noProfile.webp" alt="Profile" width="32" height="32">
+                                                          </a>
+                                                                              </header>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD6bBqUlQe32d7dZRmJane3gAsttTCZyPs",
-  authDomain: "shoop-hu4f.firebaseapp.com",
-  projectId: "shoop-hu4f",
-  storageBucket: "shoop-hu4f.firebasestorage.app",
-  messagingSenderId: "291613688377",
-  appId: "1:291613688377:web:6beb609208a1e22da403e8"
-};
+                                                                                                  <h1 id="status">Loading…</h1>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+                                                                                                                      <script type="module">
+                                                                                                                                          import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
 
-const profileLink = document.getElementById("profileLink");
+                                                                                                                                                              const status = document.getElementById("status");
+                                                                                                                                                                                  const profileLink = document.getElementById("profileLink");
 
-onAuthStateChanged(auth, user => {
-  if (!profileLink) return;
-
-  if (user) {
-    // 🔐 Logged in → go to profile page
-    const profileName =
-      user.displayName ||
-      user.email.split("@")[0];
-
-    profileLink.href =
-  `/Shoop/profile/index.html?u=${encodeURIComponent(profileName)}`;
-};
-else {
-    // 🚪 Logged out → go to login
-    profileLink.href = "/Shoop/login.html";
-  };
-})
-</script>
-
-<script type="module">
-import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
-
-const profileIcon = document.getElementById("profileLink");
-
-onAuthStateChanged(auth, user => {
-  if (!profileIcon) return;
-
-  if (user) {
-    // Logged in → profile page
-    const profileName = user.displayName || user.email.split("@")[0];
-    profileIcon.href = `/Shoop/profile/index.html?u=${encodeURIComponent(profileName)}`;
-  } else {
-    // Logged out → login page
-    profileIcon.href = "/Shoop/login.html";
-  }
-});
-</script>
+                                                                                                                                                                                                      onAuthStateChanged(auth, user => {
+                                                                                                                                                                                                                                if (user) {
+                                                                                                                                                                                                                                                                status.textContent = `Hello, ${user.displayName || user.email}`;
+                                                                                                                                                                                                                                                                                                    profileLink.href = "/Shoop/profile/index.html";
+                                                                                                                                                                                                                                                                                                                              } else {
+                                                                                                                                                                                                                                                                                                                                                              status.textContent = "Not logged in";
+                                                                                                                                                                                                                                                                                                                                                                                                  profileLink.href = "/Shoop/login.html";
+                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
 </body>
 </html>

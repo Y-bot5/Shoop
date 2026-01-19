@@ -1,90 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light dark">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-       <link rel="icon" href="favicon.ico" sizes="any">
-           <link rel="icon" type="image/png" sizes="128x128" href="icon-128.png">
-               <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
-                   <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
-                       <link rel="icon" type="image/png" sizes="48x48" href="icon-48.png">
-                           <link rel="icon" type="image/png" sizes="96x96" href="icon-96.png">
-
-                               <link rel="manifest" href="/shoop/manifest.json">
-                           
+<head>
+  <meta charset="utf-8">
     <title>Login | Shoop</title>
-    <!-- Use a modern, accessible CSS system for zero-friction sign-in -->
-    <link rel="stylesheet" href="login.css"> 
-</head>
-<body>
-    <form id="loginForm">
-  <input id="email" type="email" required placeholder="Email" autocomplete="email">
-  <input id="password" type="password" required placeholder="Password" autocomplete="current-password">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <button type="submit">Login</button>
-    </form>
+      <link rel="stylesheet" href="/Shoop/login.css">
 
-<script type="module">
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } 
-  from "/Shoop/firebase.js";
+        <!-- Favicons -->
+          <link rel="icon" href="/Shoop/icon-32.png" sizes="32x32">
+            <link rel="icon" href="/Shoop/icon-192.png" sizes="192x192">
 
-const loginForm = document.getElementById("loginForm");
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
+            </head>
+            <body>
 
-loginForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+            <h1>Login</h1>
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
+            <form id="loginForm">
+              <input id="emailInput" type="email" placeholder="Email" autofill="email" required>
+                <input id="passwordInput" type="password" placeholder="Password" autofill="current-password" required>
+                  <button type="submit">Login / Sign up</button>
+                  </form>
 
-  } catch (err) {
-    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                  <script type="module">
+                  import {
+                    auth,
+                      signInWithEmailAndPassword,
+                        createUserWithEmailAndPassword,
+                          updateProfile
+                          } from "/Shoop/firebase.js";
 
-        // Optional: set display name to email prefix
-        await updateProfile(userCredential.user, {
-          displayName: email.split("@")[0]
-        });
+                          const form = document.getElementById("loginForm");
+                          const emailInput = document.getElementById("emailInput");
+                          const passwordInput = document.getElementById("passwordInput");
 
-      } catch (createErr) {
-        alert(`Error creating account: ${createErr.message}`);
-        return;
-      }
+                          form.addEventListener("submit", async (e) => {
+                            e.preventDefault();
 
-    } else if (err.code === "auth/wrong-password") {
-      alert("Incorrect password.");
-      return;
-    } else {
-      alert(`Login error: ${err.message}`);
-      return;
-    }
-  }
+                              const email = emailInput.value.trim();
+                                const password = passwordInput.value;
 
-  // Redirect after login/signup
-  window.location.replace("/Shoop/index.html");
-});
-</script>
+                                  try {
+                                      await signInWithEmailAndPassword(auth, email, password);
 
-<script type="module">
-import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
+                                        } catch (err) {
+                                            if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+                                                  const cred = await createUserWithEmailAndPassword(auth, email, password);
+                                                        await updateProfile(cred.user, {
+                                                                displayName: email.split("@")[0]
+                                                                      });
+                                                                          } else {
+                                                                                alert(err.message);
+                                                                                      return;
+                                                                                          }
+                                                                                            }
 
-const profileIcon = document.getElementById("profileLink");
+                                                                                              location.replace("/Shoop/index.html");
+                                                                                              });
+                                                                                              </script>
 
-onAuthStateChanged(auth, user => {
-  if (!profileIcon) return;
-
-  if (user) {
-    // Logged in → profile page
-    const profileName = user.displayName || user.email.split("@")[0];
-    profileIcon.href = `/Shoop/profile/index.html?u=${encodeURIComponent(profileName)}`;
-  } else {
-    // Logged out → login page
-    profileIcon.href = "/Shoop/login.html";
-  }
-});
-</script>
-</body>
-</html>
+                                                                                              </body>
+                                                                                              </html>
