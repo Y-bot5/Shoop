@@ -1,27 +1,29 @@
- .menu {
-    left: 20px;
-    box-shadow: #515151;
-    box-shadow: 10px;
-    background: #606060;
-    font-size: 25px;
- }
-
- .menu:hover {
-    background: #7d7d7d;
- }
-
 .dark html {
    background-color: #898989;
 }
 
-#noProfile {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%; /* makes it round */
-  object-fit: cover; /* prevents stretching */
-  float: right;
-}
-
 .light html {
    background-color: #e0e0e0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* left + right */
+  padding: 10px 14px;
+  height: 48px;
+}
+
+#menuBtn {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#profileIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
 }
