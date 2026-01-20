@@ -1,54 +1,29 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark light">
+<html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="stylesheet" href="/Shoop/styles.css">
+    <title>Redirecting...</title>
 
-    <link rel="icon" href="/Shoop/favicon.ico" sizes="any">
-    <link rel="icon" type="image/png" sizes="128x128" href="icon-128.png">
+    <!-- SEO fallback for search engines -->
+    <link rel="canonical" href="/Shoop/home/">
+
+        <link rel="icon" href="/Shoop/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
     <link rel="icon" type="image/png" sizes="48x48" href="icon-48.png">
     <link rel="icon" type="image/png" sizes="96x96" href="icon-96.png">
 
     <link rel="manifest" href="/shoop/manifest.json">
-
+    
     <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/Shoop/sw.js')
-      .then(() => console.log("Service Worker Registered for Shoop"));
-  }
+      // Executes the replacement immediately
+      window.location.replace("/Shoop/home");
     </script>
-
-    <title>Shoop</title>
   </head>
   <body>
-    <button id="menu">≡</button>
-    <header>
-                    <a id="profileLink" href="/Shoop/login.html">
-                                      <img src="/Shoop/noProfile.webp" alt="Profile" width="32" height="32">
-                                                          </a>
-                                                                              </header>
-
-                                                                                                  <h1 id="status">Loading…</h1>
-
-                                                                                                                      <script type="module">
-                                                                                                                                          import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
-
-                                                                                                                                                              const status = document.getElementById("status");
-                                                                                                                                                                                  const profileLink = document.getElementById("profileLink");
-
-                                                                                                                                                                                                      onAuthStateChanged(auth, user => {
-                                                                                                                                                                                                                                if (user) {
-                                                                                                                                                                                                                                                                status.textContent = `Hello, ${user.displayName || user.email}`;
-                                                                                                                                                                                                                                                                                                    profileLink.href = "/Shoop/profile/index.html";
-                                                                                                                                                                                                                                                                                                                              } else {
-                                                                                                                                                                                                                                                                                                                                                              status.textContent = "Not logged in";
-                                                                                                                                                                                                                                                                                                                                                                                                  profileLink.href = "/Shoop/login.html";
-                                                                                                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
-</body>
+    <!-- User fallback in case JS is disabled -->
+    <p>If you are not redirected, <a href="/Shoop/home">click here</a>.</p>
+  </body>
 </html>
