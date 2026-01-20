@@ -13,6 +13,14 @@
             <link rel="icon" href="/Shoop/icon-192.png" sizes="192x192">
 
             <link rel="manifest" href="/shoop/manifest.json">
+            
+            <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/Shoop/sw.js')
+      .then(() => console.log("Service Worker Registered for Shoop"));
+  }
+    </script>
+    <script type="module" src="/Shoop/profile.js"></script>
             </head>
             <body>
               <header class="topbar">

@@ -14,6 +14,14 @@
         <link rel="stylesheet" href="/Shoop/styles.css">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/Shoop/sw.js')
+      .then(() => console.log("Service Worker Registered for Shoop"));
+  }
+    </script>
+    <script type="module" src="/Shoop/profile.js"></script>
 </head>
             <body>
                 <header class="topbar">
