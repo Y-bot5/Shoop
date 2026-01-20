@@ -1,4 +1,4 @@
- .dark .menu {
+ .menu {
     left: 20px;
     box-shadow: #515151;
     box-shadow: 10px;
@@ -6,12 +6,12 @@
     font-size: 25px;
  }
 
- .dark .menu:hover {
+ .menu:hover {
     background: #7d7d7d;
  }
 
 .dark html {
-   background: #898989
+   background-color: #898989;
 }
 
 #noProfile {
@@ -19,4 +19,9 @@
   height: 32px;
   border-radius: 50%; /* makes it round */
   object-fit: cover; /* prevents stretching */
+  float: left;
+}
+
+.light html {
+   background-color: #e0e0e0;
 }
