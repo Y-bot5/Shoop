@@ -19,7 +19,7 @@
   height: 32px;
   border-radius: 50%; /* makes it round */
   object-fit: cover; /* prevents stretching */
-  float: left;
+  float: right;
 }
 
 .light html {

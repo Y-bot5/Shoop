@@ -1,5 +1,5 @@
 {
-  "name": "Shoop PWA",
+  "name": "Shoop Groups",
   "short_name": "Shoop",
   "start_url": "/Shoop/",
   "scope": "/Shoop/",
@@ -7,6 +7,7 @@
   "background_color": "#ffffff",
   "theme_color": "#000000",
   "icons": [
+    { "src": "/Shoop/favicon.ico", "sizes": "any", "type": "image/png" },
     { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
