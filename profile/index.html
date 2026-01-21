@@ -69,7 +69,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 onAuthStateChanged(auth, user => {
   if (!user) {
     // Not logged in
-    location.replace("/Shoop/login.html");
+    location.replace("/Shoop/login/");
     return;
   }
 
@@ -111,7 +111,7 @@ onAuthStateChanged(auth, user => {
 /* --- Logout --- */
 logoutBtn?.addEventListener("click", async () => {
   await signOut(auth);
-  location.replace("/Shoop/login.html");
+  location.replace("/Shoop/login/");
 });
 </script>
 
