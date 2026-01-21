@@ -40,8 +40,7 @@
 
                                       <p>Name: <span id="name"></span></p>
                                                   <p>Email: <span id="email"></span></p>
-
-                                                              <button id="logout">Log out</button>
+                                                  
                                                               <div id="profileMenu">
   <button id="editBtn">Edit profile</button>
   <button id="logoutBtn">Log out</button>
@@ -50,15 +49,14 @@
                                                                           <script type="module">
 import { auth, onAuthStateChanged, signOut } from "/Shoop/firebase.js";
 
+status.textContent = "Profile"
+
 const params = new URLSearchParams(location.search);
 const viewedUser = params.get("u");
-
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 const status = document.getElementById("status");
-                                                                                                              const nameEl = document.getElementById("name");
-                                                                                                                          const emailEl = document.getElementById("email");
 status.textContent = "Profile";
 onAuthStateChanged(auth, user => {
   if (!user) {
@@ -76,32 +74,19 @@ onAuthStateChanged(auth, user => {
 
   // 👤 Viewing own profile
   if (viewedUser === myName) {
-    status.textContent = "Profile";
-                                                                                                                                                                                                                                                                        nameEl.textContent = myName.displayName || "This user hasn't chosen a name yet.";
-                                                                                                                                                                                                                                                                                                emailEl.textContent = myName.email;
+    logoutBtn.onclick = async () => {
+  await signOut(auth);
+  location.replace("/Shoop/login.html");
+};
     editBtn.style.display = "inline-block";
     logoutBtn.style.display = "inline-block";
   }
   // 👁 Viewing someone else
   else {
-    status.textContent = "Profile";
-                                                                                                                                                                                                                                                                        nameEl.textContent = otherUser.displayName || "This user hasn't chosen a name yet.";
-                                                                                                                                                                                                                                                                                                emailEl.textContent = otherUser.email;
     editBtn.style.display = "none";
     logoutBtn.style.display = "none";
   }
 });
-
-logoutBtn.onclick = async () => {
-  await signOut(auth);
-  location.replace("/Shoop/login.html");
-};
-                                                                                                                                                                                                                                                        s
-                                                                                                                                                                                                                                                                      
-                                                                                                                                                                                                                                                                                                                        logout.onclick = async () => {
-                                                                                                                                                                                                                                                                                                                                          await signOut(auth);
-                                                                                                                                                                                                                                                                                                                                                              location.replace("/Shoop/home/");
-                                                                                                                                                                                                                                                                                                                                                                          };
 
 document.title = viewedUser === myName
   ? "Your Profile | Shoop"
