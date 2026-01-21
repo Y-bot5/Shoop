@@ -54,9 +54,6 @@
   <button id="cancelBtn">Cancel</button>
 </div>
 
-<button id="editBtn">Edit profile</button>
-<button id="logoutBtn">Log out</button>
-
 <script type="module">
 import {
   auth,
@@ -124,10 +121,8 @@ onAuthStateChanged(auth, user => {
     viewProfile.style.display = "block";
     editProfile.style.display = "none";
 
-    editBtn.style.display =
-      viewedUsername === myUsername ? "inline-block" : "none";
-    logoutBtn.style.display =
-      viewedUsername === myUsername ? "inline-block" : "none";
+    editBtn.style.display = "block";
+    logoutBtn.style.display = "block";
 
     emailEl.textContent =
       viewedUsername === myUsername ? user.email : "";
@@ -143,7 +138,7 @@ onAuthStateChanged(auth, user => {
   statusEl.textContent = "Edit Profile";
 
     editBtn.style.display = "none";
-    logoutBtn.style.display = "none";
+    logoutBtn.style.display = "block";
 
     editName.value = user.displayName || "";
     editPhoto.value = user.photoURL || "";
