@@ -46,37 +46,62 @@
   <button id="logoutBtn">Log out</button>
 </div>
 
+<div id="editProfile" style="display:none">
+  <h2>Edit profile</h2>
+
+  <input id="editName" placeholder="Display name">
+  <input id="editPhoto" placeholder="Photo URL">
+
+  <button id="saveBtn">Save</button>
+  <button id="cancelBtn">Cancel</button>
+</div>
+
+<button id="editBtn">Edit profile</button>
+<button id="logoutBtn">Log out</button>
+
 <script type="module">
 import {
   auth,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile
 } from "/Shoop/firebase.js";
-
-/* --- Get URL username --- */
-const params = new URLSearchParams(window.location.search);
-const viewedUsername = params.get("u");
 
 /* --- Elements --- */
 const avatar = document.getElementById("avatar");
 const nameEl = document.getElementById("name");
+const statusEl = document.getElementById("status");
 const emailEl = document.getElementById("email");
-const statusEl = document.getElementById("statusEl");
+
+const viewProfile = document.getElementById("viewProfile");
+const editProfile = document.getElementById("editProfile");
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
 
-/* --- Auth state --- */
+const editName = document.getElementById("editName");
+const editPhoto = document.getElementById("editPhoto");
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+
+/* --- URL params --- */
+const params = new URLSearchParams(location.search);
+const viewedUsername = params.get("u");
+const mode = params.get("mode");
+
+/* --- Initial state --- */
+statusEl.textContent = "Loading...";
+
+/* --- Auth --- */
 onAuthStateChanged(auth, user => {
   if (!user) {
-    // Not logged in
     location.replace("/Shoop/login/");
     return;
   }
 
   const myUsername = user.displayName;
 
-  // No ?u= → redirect to own profile
+  // Ensure ?u=
   if (!viewedUsername) {
     location.replace(
       `/Shoop/profile/?u=${encodeURIComponent(myUsername)}`
@@ -84,42 +109,83 @@ onAuthStateChanged(auth, user => {
     return;
   }
 
-  // Fill profile info (Auth-only = your own data)
+  // Block editing other users
+  if (mode === "edit" && viewedUsername !== myUsername) {
+    location.replace(
+      `/Shoop/profile/?u=${encodeURIComponent(viewedUsername)}`
+    );
+    return;
+  }
+
+  /* --- Common profile data --- */
   avatar.src = user.photoURL || "/Shoop/noProfile.webp";
   nameEl.textContent = viewedUsername;
-  emailEl.textContent =
-    viewedUsername === myUsername ? user.email : "";
   statusEl.textContent = "Profile";
 
-  // Own profile → show controls
-  if (viewedUsername === myUsername) {
-    editBtn.style.display = "inline-block";
-    logoutBtn.style.display = "inline-block";
+  /* --- VIEW MODE --- */
+  if (mode !== "edit") {
+    viewProfile.style.display = "block";
+    editProfile.style.display = "none";
+
+    editBtn.style.display =
+      viewedUsername === myUsername ? "inline-block" : "none";
+    logoutBtn.style.display =
+      viewedUsername === myUsername ? "inline-block" : "none";
+
+    emailEl.textContent =
+      viewedUsername === myUsername ? user.email : "";
   }
-  // Someone else → view only
+
+  /* --- EDIT MODE --- */
   else {
+    viewProfile.style.display = "none";
+    editProfile.style.display = "block";
+
     editBtn.style.display = "none";
     logoutBtn.style.display = "none";
+
+    editName.value = user.displayName || "";
+    editPhoto.value = user.photoURL || "";
   }
 
-  // Page title
   document.title =
-    viewedUsername === myUsername
-      ? "Your Profile | Shoop"
-      : `${viewedUsername} | Shoop`;
+    mode === "edit"
+      ? "Edit Profile | Shoop"
+      : viewedUsername === myUsername
+        ? "Your Profile | Shoop"
+        : `${viewedUsername} | Shoop`;
 });
 
-/* --- Logout --- */
+/* --- Buttons --- */
+
+// Enter edit mode
+editBtn?.addEventListener("click", () => {
+  const u = encodeURIComponent(viewedUsername);
+  location.href = `/Shoop/profile/?u=${u}&mode=edit`;
+});
+
+// Cancel edit
+cancelBtn?.addEventListener("click", () => {
+  const u = encodeURIComponent(viewedUsername);
+  location.href = `/Shoop/profile/?u=${u}`;
+});
+
+// Save changes
+saveBtn?.addEventListener("click", async () => {
+  await updateProfile(auth.currentUser, {
+    displayName: editName.value.trim(),
+    photoURL: editPhoto.value.trim()
+  });
+
+  const u = encodeURIComponent(editName.value.trim());
+  location.href = `/Shoop/profile/?u=${u}`;
+});
+
+// Logout
 logoutBtn?.addEventListener("click", async () => {
   await signOut(auth);
   location.replace("/Shoop/login/");
 });
-</script>
-
-              <script>
-menuBtn.onclick = () => {
-  alert("Menu coming soon 👀");
-};
 </script>
                                                                                                                                                                                                                                                                                                                                                                                                   </body>
                                                                                                                                                                                                                                                                                                                                                                                                   </html>
