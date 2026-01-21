@@ -1,8 +1,8 @@
-.dark html {
+:root.dark {
    background-color: #898989;
 }
 
-.light html {
+:root.light {
    background-color: #e0e0e0;
 }
 
