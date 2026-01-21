@@ -88,6 +88,7 @@ onAuthStateChanged(auth, user => {
   nameEl.textContent = viewedUsername;
   emailEl.textContent =
     viewedUsername === myUsername ? user.email : "";
+  statusEl.textContent = "Profile";
 
   // Own profile → show controls
   if (viewedUsername === myUsername) {
@@ -103,8 +104,8 @@ onAuthStateChanged(auth, user => {
   // Page title
   document.title =
     viewedUsername === myUsername
-      ? "Your Profile – Shoop"
-      : `${viewedUsername} – Shoop`;
+      ? "Your Profile | Shoop"
+      : `${viewedUsername} | Shoop`;
 });
 
 /* --- Logout --- */
