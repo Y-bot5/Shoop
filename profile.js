@@ -1,5 +1,5 @@
 const profileLink = document.getElementById("profileLink");
-const profileIcon = document.getElementById("profileIcon");
+const profileIcon = document.getElementById("avatar");
 
 onAuthStateChanged(auth, user => {
   if (user) {
