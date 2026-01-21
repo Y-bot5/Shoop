@@ -120,7 +120,6 @@ onAuthStateChanged(auth, user => {
   /* --- Common profile data --- */
   avatar.src = user.photoURL || "/Shoop/noProfile.webp";
   nameEl.textContent = viewedUsername;
-  statusEl.textContent = "Profile";
 
   /* --- VIEW MODE --- */
   if (mode !== "edit") {
@@ -134,12 +133,16 @@ onAuthStateChanged(auth, user => {
 
     emailEl.textContent =
       viewedUsername === myUsername ? user.email : "";
+
+  statusEl.textContent = "Profile";
   }
 
   /* --- EDIT MODE --- */
   else {
     viewProfile.style.display = "none";
     editProfile.style.display = "block";
+
+  statusEl.textContent = "Edit Profile";
 
     editBtn.style.display = "none";
     logoutBtn.style.display = "none";

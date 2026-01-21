@@ -11,3 +11,7 @@ onAuthStateChanged(auth, user => {
     profileIcon.src = "/Shoop/noProfile.webp";
   }
 });
+
+menuBtn.onclick = () => {
+  alert("Menu coming soon 👀");
+};
