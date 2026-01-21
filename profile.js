@@ -1,3 +1,4 @@
+import { auth, onAuthStateChanged } from "./firebase.js";
 const profileLink = document.getElementById("profileLink");
 const profileIcon = document.getElementById("avatar");
 
