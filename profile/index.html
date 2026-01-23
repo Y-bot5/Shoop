@@ -116,8 +116,8 @@ onAuthStateChanged(auth, user => {
 
   /* --- VIEW MODE --- */
   if (mode !== "edit") {
-    viewProfile.style.display = "block";
-    editProfile.style.display = "none";
+    viewProfile.hidden = false;
+    editProfile.hidden = true;
 
     editBtn.style.display = "inline-block";
     logoutBtn.style.display = "inline-block";
