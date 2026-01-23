@@ -59,6 +59,11 @@
   topbar.hidden = false
                                                                                                                                                                                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                setTimeout(() => {
+  if (profileRoot.hidden) {
+    statusEl.textContent = "Failed to load profile";
+  }
+}, 8000);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </script>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     <script>
 menuBtn.onclick = () => {
