@@ -72,7 +72,7 @@ const emailEl = document.getElementById("email");
 
 const viewProfile = document.getElementById("viewProfile");
 const editProfile = document.getElementById("editProfile");
-const profileRoot = document.getElementById("other")
+const other = document.getElementById("other")
 const topbar = document.getElementById("topbar")
 
 const editBtn = document.getElementById("editBtn");
@@ -130,7 +130,7 @@ onAuthStateChanged(auth, user => {
   avatar.src = user.photoURL || "/Shoop/noProfile.webp";
   nameEl.textContent = viewedUsername;
   
-  profileRoot.hidden = "block";
+  other.style.display = "block";
   topbar.style.display = "block";
   }
 
@@ -148,7 +148,7 @@ onAuthStateChanged(auth, user => {
     editName.value = user.displayName || "";
     editPhoto.value = user.photoURL || "";
 
-    profileRoot.style.display = "block";
+    other.style.display = "block";
     topbar.style.display = "block";
   }
 });
