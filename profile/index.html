@@ -121,8 +121,8 @@ onAuthStateChanged(auth, user => {
     viewProfile.style.display = "block";
     editProfile.style.display = "none";
 
-    editBtn.style.display = "block";
-    logoutBtn.style.display = "block";
+    editBtn.style.display = "inline-block";
+    logoutBtn.style.display = "inline-block";
 
     emailEl.textContent =
       viewedUsername === myUsername ? user.email : "";
