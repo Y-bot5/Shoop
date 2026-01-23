@@ -23,7 +23,7 @@
     <title>Shoop</title>
   </head>
   <body>
-    <header class="topbar">
+    <header class="topbar" hidden>
   <button id="menuBtn" aria-label="Menu">☰</button>
 
   <a id="profileLink">
@@ -35,6 +35,7 @@
   </a>
 </header>
 
+<div id="other" hidden></div>
                                                                                                   <h1 id="status">Loading…</h1>
 
                                                                                                                       <script type="module">
@@ -42,14 +43,20 @@
 
                                                                                                                                                               const status = document.getElementById("status");
                                                                                                                                                                                   const profileLink = document.getElementById("profileLink");
+                                                                                                                                                                                  const profileRoot = document.getElementById("other")
+                                                                                                                                                                                  const topbar = document.getElementById("topbar")
 
                                                                                                                                                                                                       onAuthStateChanged(auth, user => {
                                                                                                                                                                                                                                 if (user) {
                                                                                                                                                                                                                                                                 status.textContent = `Hello, ${user.displayName || user.email}`;
                                                                                                                                                                                                                                                                                                     profileLink.href = "/Shoop/profile/";
+                                                                                                                                                                                                                                                                                                    profileRoot.hidden = false;
+  topbar.hidden = false
                                                                                                                                                                                                                                                                                                                               } else {
                                                                                                                                                                                                                                                                                                                                                               status.textContent = "Not logged in";
                                                                                                                                                                                                                                                                                                                                                                                                   profileLink.href = "/Shoop/login/";
+                                                                                                                                                                                                                                                                                                                                                                                                  profileRoot.hidden = false;
+  topbar.hidden = false
                                                                                                                                                                                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </script>
