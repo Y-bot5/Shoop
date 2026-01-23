@@ -136,6 +136,7 @@ onAuthStateChanged(auth, user => {
     editProfile.style.display = "block";
 
   statusEl.textContent = "Edit Profile";
+  emailEl.textContent = user.email;
 
     editBtn.style.display = "none";
     logoutBtn.style.display = "block";
