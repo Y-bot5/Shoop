@@ -23,7 +23,7 @@
     <title>Shoop</title>
   </head>
   <body>
-    <header class="topbar" hidden>
+    <header class="topbar" style="display:none">
   <button id="menuBtn" aria-label="Menu">☰</button>
 
   <a id="profileLink">
@@ -35,7 +35,7 @@
   </a>
 </header>
 
-<div id="other" hidden></div>
+<div id="other" style="display:none"></div>
                                                                                                   <h1 id="status">Loading…</h1>
 
                                                                                                                       <script type="module">
@@ -50,25 +50,16 @@
                                                                                                                                                                                                                                 if (user) {
                                                                                                                                                                                                                                                                 status.textContent = `Hello, ${user.displayName || user.email}`;
                                                                                                                                                                                                                                                                                                     profileLink.href = "/Shoop/profile/";
-                                                                                                                                                                                                                                                                                                    profileRoot.hidden = false;
-  topbar.hidden = false
+                                                                                                                                                                                                                                                                                                    profileRoot.style.display = "block";
+  topbar.style.display = "block";
                                                                                                                                                                                                                                                                                                                               } else {
                                                                                                                                                                                                                                                                                                                                                               status.textContent = "Not logged in";
                                                                                                                                                                                                                                                                                                                                                                                                   profileLink.href = "/Shoop/login/";
-                                                                                                                                                                                                                                                                                                                                                                                                  profileRoot.hidden = false;
-  topbar.hidden = false
+                                                                                                                                                                                                                                                                                                                                                                                                  profileRoot.style.display = "block";
+  topbar.style.display = "block";
                                                                                                                                                                                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                setTimeout(() => {
-  if (profileRoot.hidden) {
-    statusEl.textContent = "Failed to load profile";
-  }
-}, 8000);
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <script>
-menuBtn.onclick = () => {
-  alert("Menu coming soon 👀");
-};
-</script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 </body>
 </html>
