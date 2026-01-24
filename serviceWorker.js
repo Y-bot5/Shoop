@@ -21,7 +21,8 @@ const FILES = [
   '/Shoop/profile/',
   '/Shoop/profile/index.html',
   '/Shoop/profile/styles.css',
-  '/Shoop/offline.html'
+  '/Shoop/offline.html',
+  '/Shoop/registerServiceWorker.js'
 ]
 
 self.addEventListener('fetch', (event) => {
