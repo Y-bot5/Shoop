@@ -1,4 +1,4 @@
-const CACHE_NAME = 'assets-v1';
+const CACHE_NAME = 'assets-v2';
 const FILES = [
   '/Shoop/',
   '/Shoop/index.html',
@@ -22,7 +22,8 @@ const FILES = [
   '/Shoop/profile/index.html',
   '/Shoop/profile/styles.css',
   '/Shoop/offline.html',
-  '/Shoop/registerServiceWorker.js'
+  '/Shoop/registerServiceWorker.js',
+  'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js'
 ]
 
 self.addEventListener('fetch', (event) => {
