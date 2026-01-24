@@ -20,17 +20,31 @@ const FILES = [
   '/Shoop/profile.js',
   '/Shoop/profile/',
   '/Shoop/profile/index.html',
-  '/Shoop/profile/styles.css'
+  '/Shoop/profile/styles.css',
+  '/Shoop/offline.html'
 ]
 
 self.addEventListener('fetch', (event) => {
-  event.respondWith(
-    caches.match(event.request, { ignoreSearch: true }).then((response) => {
-      // Return the cached file if found, otherwise fetch from network
-      return response || fetch(event.request);
-    })
-  );
+    // We only care about GET requests for the cache
+    if (event.request.method !== 'GET') return;
+
+    event.respondWith(
+        caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+            if (cachedResponse) {
+                return cachedResponse;
+            }
+
+            // If not in cache, try the network
+            return fetch(event.request).catch(() => {
+                // If network fails AND it's a page navigation, show offline.html
+                if (event.request.mode === 'navigate') {
+                    return caches.match('/Shoop/offline.html');
+                }
+            });
+        })
+    );
 });
+
 
 self.addEventListener('install', function(event) {
     console.log('[Service Worker] Installed.');

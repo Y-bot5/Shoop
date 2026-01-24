@@ -1,4 +1,4 @@
-import { auth, onAuthStateChanged } from "./firebase.js";
+import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
 const profileLink = document.getElementById("profileLink");
 const profileIcon = document.getElementById("avatar");
 
