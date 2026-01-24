@@ -9,6 +9,18 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
+import { getFirestore, enableIndexedDbPersistence } from "firebase/firestore";
+
+const db = getFirestore();
+
+enableIndexedDbPersistence(db).catch((err) => {
+    if (err.code == 'failed-precondition') {
+        // Multiple tabs open, persistence can only be enabled in one tab at a time.
+    } else if (err.code == 'unimplemented') {
+        // The current browser does not support all of the features needed to enable persistence
+    }
+});
+
 const firebaseConfig = {
     apiKey: "AIzaSyD6bBqUlQe32d7dZRmJane3gAsttTCZyPs",
       authDomain: "shoop-hu4f.firebaseapp.com",
