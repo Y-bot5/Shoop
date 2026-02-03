@@ -83,6 +83,13 @@ const params = new URLSearchParams(location.search);
 const viewedUsername = params.get("u");
 const mode = params.get("mode");
 
+if (!user.displayName) {
+    const fallback = generateUsername(user.email);
+    updateProfile(user, { displayName: fallback })
+      .then(() => location.reload());
+    return;
+  }
+
 /* --- Initial state --- */
 statusEl.textContent = "Loading...";
 
