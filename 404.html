@@ -5,5 +5,12 @@
     </head>
     <body>
         <h1>404 Page Not Found</h1>
+        <button id="homePage">Home Page</button>
+        <script>
+            const homePage = document.getElementById("homePage")
+            homePage.onclick = function() {
+                location.replace("/Shoop/home/");
+            }
+        </script>
     </body>
 </html>
