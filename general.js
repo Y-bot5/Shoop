@@ -6,6 +6,7 @@ const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
 const isDarkMode = !isLightMode;
 const dark = document.querySelector(".dark");
 const light = document.querySelector(".light");
+const other = document.querySelector(".other")
 
 onAuthStateChanged(auth, user => {
   if (user) {
@@ -13,6 +14,7 @@ onAuthStateChanged(auth, user => {
       `/Shoop/profile/?u=${encodeURIComponent(user.displayName)}`;
     profileIcon.src = user.photoURL || "/Shoop/noProfile.webp";
     topbar.style.display = "flex";
+    other.style.display = "block";
   } else {
     profileLink.href = "/Shoop/login/";
     profileIcon.src = "/Shoop/noProfile.webp";

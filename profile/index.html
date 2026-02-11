@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 
@@ -34,10 +34,10 @@
 </header>
 
                           <h1 id="status">Loading…</h1>
-                          <div id="other" style="display:none">
+                          <div class="other" style="display:none">
                                       <p>Name: <span id="name"></span></p>
                                                   <p>Email: <span id="email"></span></p>
-                          </div>
+
 <div id="viewProfile" style="display:none">
   <button id="editBtn">Edit profile</button>
 </div>
@@ -51,6 +51,7 @@
   <button id="saveBtn">Save</button>
   <button id="cancelBtn">Cancel</button>
   <button id="logoutBtn">Log out</button>
+</div>
 </div>
 
 <script type="module">
@@ -69,7 +70,6 @@ const emailEl = document.getElementById("email");
 
 const viewProfile = document.getElementById("viewProfile");
 const editProfile = document.getElementById("editProfile");
-const other = document.getElementById("other")
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -132,8 +132,6 @@ onAuthStateChanged(auth, user => {
   statusEl.textContent = "Profile";
   avatar.src = user.photoURL || "/Shoop/noProfile.webp";
   nameEl.textContent = viewedUsername;
-  
-  other.style.display = "block";
   }
 
   /* --- EDIT MODE --- */
@@ -149,8 +147,6 @@ onAuthStateChanged(auth, user => {
 
     editName.value = user.displayName || "";
     editPhoto.value = user.photoURL || "";
-
-    other.style.display = "block";
   }
 });
   
@@ -214,10 +210,9 @@ setTimeout(() => {
 </header>
 
                           <h1 id="status">Loading…</h1>
-                          <div id="other" style="display:none">
+                          <div class="other" style="display:none">
                                       <p>Name: <span id="name"></span></p>
                                                   <p>Email: <span id="email"></span></p>
-                          </div>
 <div id="viewProfile" style="display:none">
   <button id="editBtn">Edit profile</button>
 </div>
@@ -231,6 +226,7 @@ setTimeout(() => {
   <button id="saveBtn">Save</button>
   <button id="cancelBtn">Cancel</button>
   <button id="logoutBtn">Log out</button>
+</div>
 </div>
 
 <script type="module">
@@ -249,7 +245,6 @@ const emailEl = document.getElementById("email");
 
 const viewProfile = document.getElementById("viewProfile");
 const editProfile = document.getElementById("editProfile");
-const other = document.getElementById("other")
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -312,8 +307,6 @@ onAuthStateChanged(auth, user => {
   statusEl.textContent = "Profile";
   avatar.src = user.photoURL || "/Shoop/noProfile.webp";
   nameEl.textContent = viewedUsername;
-  
-  other.style.display = "block";
   }
 
   /* --- EDIT MODE --- */
@@ -329,8 +322,6 @@ onAuthStateChanged(auth, user => {
 
     editName.value = user.displayName || "";
     editPhoto.value = user.photoURL || "";
-
-    other.style.display = "block";
   }
 });
   
