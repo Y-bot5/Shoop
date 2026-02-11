@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
     <title>Login | Shoop</title>
@@ -19,6 +19,7 @@
     <script type="module" src="/Shoop/profile.js"></script>
             </head>
             <body>
+              <div class="light" style="display:block">
               <header class="topbar">
   <button id="menuBtn" aria-label="Menu">☰</button>
 
@@ -71,18 +72,82 @@ loginForm.onsubmit = async (e) => {
   const username = generateUsername(email);
 }
 
-
       // STEP 2A — set display name
       await updateProfile(cred.user, {
         displayName: email.split("@")[0],
         photoURL: "/Shoop/noProfile.webp"
       });
-
     }
   }
 
   location.replace("/Shoop/home/");
 };
 </script>
+</div>
+<div class="dark" style="display:none">
+              <header class="topbar">
+  <button id="menuBtn" aria-label="Menu">☰</button>
+
+  <a id="profileLink">
+    <img
+      id="avatar"
+      src="/Shoop/noProfile.webp"
+      alt="Profile"
+    >
+  </a>
+</header>
+
+            <h1>Login</h1>
+
+            <form id="loginForm">
+              <input id="emailInput" type="email" placeholder="Email" autofill="email" required>
+                <input id="passwordInput" type="password" placeholder="Password" autofill="current-password" required>
+                  <button type="submit">Login / Sign up</button>
+                  </form>
+
+                  <script type="module">
+import {
+  auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  onAuthStateChanged
+} from "/Shoop/firebase.js";
+
+loginForm.onsubmit = async (e) => {
+  e.preventDefault();
+
+  
+      function generateUsername(email) {
+  const base = email.split("@")[0].toLowerCase().replace(/[^a-z0-9]/g, "");
+  const rand = Math.floor(Math.random() * 10000);
+  return `${base}-${rand}`;
+
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+
+  } catch (err) {
+    // User doesn't exist → create account
+    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+  const username = generateUsername(email);
+}
+
+      // STEP 2A — set display name
+      await updateProfile(cred.user, {
+        displayName: email.split("@")[0],
+        photoURL: "/Shoop/noProfile.webp"
+      });
+    }
+  }
+
+  location.replace("/Shoop/home/");
+};
+</script>
+</div>
                                                                                               </body>
                                                                                               </html>
