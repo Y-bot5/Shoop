@@ -12,7 +12,7 @@ onAuthStateChanged(auth, user => {
     profileLink.href =
       `/Shoop/profile/?u=${encodeURIComponent(user.displayName)}`;
     profileIcon.src = user.photoURL || "/Shoop/noProfile.webp";
-    topbar.style.display = "block";
+    topbar.style.display = "flex";
   } else {
     profileLink.href = "/Shoop/login/";
     profileIcon.src = "/Shoop/noProfile.webp";
