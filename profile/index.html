@@ -20,6 +20,7 @@
     <script type="module" src="/Shoop/profile.js"></script>
 </head>
             <body>
+              <div class="light" style="display:block">
                 <header class="topbar" style="display:none">
   <button id="menuBtn" aria-label="Menu">☰</button>
 
@@ -200,5 +201,189 @@ setTimeout(() => {
   }
 }, 8000);
 </script>
+              </div>
+
+              <div class="dark" style="display:none">
+                <header class="topbar" style="display:none">
+  <button id="menuBtn" aria-label="Menu">☰</button>
+
+  <a id="profileLink">
+    <img
+      id="avatar"
+      src="/Shoop/noProfile.webp"
+      alt="Profile"
+    >
+  </a>
+</header>
+
+                          <h1 id="status">Loading…</h1>
+                          <div id="other" style="display:none">
+                                      <p>Name: <span id="name"></span></p>
+                                                  <p>Email: <span id="email"></span></p>
+                          </div>
+<div id="viewProfile" style="display:none">
+  <button id="editBtn">Edit profile</button>
+</div>
+
+<div id="editProfile" style="display:none">
+  <h2>Edit profile</h2>
+
+  <input id="editName" placeholder="Display name">
+  <input id="editPhoto" placeholder="Photo URL">
+
+  <button id="saveBtn">Save</button>
+  <button id="cancelBtn">Cancel</button>
+  <button id="logoutBtn">Log out</button>
+</div>
+
+<script type="module">
+import {
+  auth,
+  onAuthStateChanged,
+  signOut,
+  updateProfile
+} from "/Shoop/firebase.js";
+
+/* --- Elements --- */
+const avatar = document.getElementById("avatar");
+const nameEl = document.getElementById("name");
+const statusEl = document.getElementById("status");
+const emailEl = document.getElementById("email");
+
+const viewProfile = document.getElementById("viewProfile");
+const editProfile = document.getElementById("editProfile");
+const other = document.getElementById("other")
+const topbar = document.querySelector("topbar")
+
+const editBtn = document.getElementById("editBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+
+const editName = document.getElementById("editName");
+const editPhoto = document.getElementById("editPhoto");
+const saveBtn = document.getElementById("saveBtn");
+const cancelBtn = document.getElementById("cancelBtn");
+/* --- URL params --- */
+const params = new URLSearchParams(location.search);
+const viewedUsername = params.get("u");
+const mode = params.get("mode");
+
+if (!user.displayName) {
+    const fallback = generateUsername(user.email);
+    updateProfile(user, { displayName: fallback })
+      .then(() => location.reload());
+    return;
+  }
+
+/* --- Initial state --- */
+statusEl.textContent = "Loading...";
+
+/* --- Auth --- */
+onAuthStateChanged(auth, user => {
+  if (!user) {
+    location.replace("/Shoop/login/");
+    return;
+  }
+
+  const myUsername = user.displayName;
+
+  // Ensure ?u=
+  if (!viewedUsername) {
+    location.replace(
+      `/Shoop/profile/?u=${encodeURIComponent(myUsername)}`
+    );
+    return;
+  }
+
+  // Block editing other users
+  if (mode === "edit" && viewedUsername !== myUsername) {
+    location.replace(
+      `/Shoop/profile/?u=${encodeURIComponent(viewedUsername)}`
+    );
+    return;
+  }
+
+  /* --- VIEW MODE --- */
+  if (mode !== "edit") {
+    viewProfile.style.display = "block";
+    editProfile.style.display = "none";
+
+    editBtn.style.display = "inline-block";
+    logoutBtn.style.display = "inline-block";
+
+    emailEl.textContent =
+      viewedUsername === myUsername ? user.email : "";
+
+  statusEl.textContent = "Profile";
+  avatar.src = user.photoURL || "/Shoop/noProfile.webp";
+  nameEl.textContent = viewedUsername;
+  
+  other.style.display = "block";
+  topbar.style.display = "block";
+  }
+
+  /* --- EDIT MODE --- */
+  else {
+    viewProfile.style.display = "none";
+    editProfile.style.display = "block";
+
+  statusEl.textContent = "Edit Profile";
+  emailEl.textContent = user.email;
+
+    editBtn.style.display = "none";
+    logoutBtn.style.display = "block";
+
+    editName.value = user.displayName || "";
+    editPhoto.value = user.photoURL || "";
+
+    other.style.display = "block";
+    topbar.style.display = "block";
+  }
+});
+  
+document.title =
+    mode === "edit"
+      ? "Edit Profile | Shoop"
+      : viewedUsername === myUsername
+        ? "Your Profile | Shoop"
+        : `${viewedUsername} | Shoop`;
+
+/* --- Buttons --- */
+
+// Enter edit mode
+editBtn?.addEventListener("click", () => {
+  const u = encodeURIComponent(viewedUsername);
+  location.href = `/Shoop/profile/?u=${u}&mode=edit`;
+});
+
+// Cancel edit
+cancelBtn?.addEventListener("click", () => {
+  const u = encodeURIComponent(viewedUsername);
+  location.href = `/Shoop/profile/?u=${u}`;
+});
+
+// Save changes
+saveBtn?.addEventListener("click", async () => {
+  await updateProfile(auth.currentUser, {
+    displayName: editName.value.trim(),
+    photoURL: editPhoto.value.trim()
+  });
+
+  const u = encodeURIComponent(editName.value.trim());
+  location.href = `/Shoop/profile/?u=${u}`;
+});
+
+// Logout
+logoutBtn?.addEventListener("click", async () => {
+  await signOut(auth);
+  location.replace("/Shoop/login/");
+});
+
+setTimeout(() => {
+  if (profileRoot.hidden) {
+    statusEl.textContent = "Failed to load profile";
+  }
+}, 8000);
+</script>
+              </div>
                                                                                                                                                                                                                                                                                                                                                                                                   </body>
                                                                                                                                                                                                                                                                                                                                                                                                   </html>
