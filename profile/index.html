@@ -70,7 +70,6 @@ const emailEl = document.getElementById("email");
 const viewProfile = document.getElementById("viewProfile");
 const editProfile = document.getElementById("editProfile");
 const other = document.getElementById("other")
-const topbar = document.querySelector("topbar")
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -135,7 +134,6 @@ onAuthStateChanged(auth, user => {
   nameEl.textContent = viewedUsername;
   
   other.style.display = "block";
-  topbar.style.display = "block";
   }
 
   /* --- EDIT MODE --- */
@@ -153,7 +151,6 @@ onAuthStateChanged(auth, user => {
     editPhoto.value = user.photoURL || "";
 
     other.style.display = "block";
-    topbar.style.display = "block";
   }
 });
   
@@ -253,7 +250,6 @@ const emailEl = document.getElementById("email");
 const viewProfile = document.getElementById("viewProfile");
 const editProfile = document.getElementById("editProfile");
 const other = document.getElementById("other")
-const topbar = document.querySelector("topbar")
 
 const editBtn = document.getElementById("editBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -318,7 +314,6 @@ onAuthStateChanged(auth, user => {
   nameEl.textContent = viewedUsername;
   
   other.style.display = "block";
-  topbar.style.display = "block";
   }
 
   /* --- EDIT MODE --- */
@@ -336,7 +331,6 @@ onAuthStateChanged(auth, user => {
     editPhoto.value = user.photoURL || "";
 
     other.style.display = "block";
-    topbar.style.display = "block";
   }
 });
   
