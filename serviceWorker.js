@@ -1,4 +1,4 @@
-const CACHE_NAME = 'assets-v0.1.0';
+const CACHE_NAME = 'assets-v0.3.0';
 const FILES = [
   '/Shoop/',
   '/Shoop/index.html',
