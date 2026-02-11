@@ -1,5 +1,6 @@
-firebase.js
+*.js
 *.json
 *.JSON
 *.env
 *.ENV
+*.JS
