@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark light">
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,6 +20,7 @@
     <title>Shoop</title>
   </head>
   <body>
+    <div class="light" style="display:block">
     <header class="topbar" style="display:none">
   <button id="menuBtn" aria-label="Menu">☰</button>
 
@@ -57,6 +58,46 @@
                                                                                                                                                                                                                                                                                                                                                                                                                             }
                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-</body>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="dark" style="display:none">
+    <header class="topbar" style="display:none">
+  <button id="menuBtn" aria-label="Menu">☰</button>
+
+  <a id="profileLink">
+    <img
+      id="avatar"
+      src="/Shoop/noProfile.webp"
+      alt="Profile"
+    >
+  </a>
+</header>
+
+<div id="other" style="display:none"></div>
+                                                                                                  <h1 id="status">Loading…</h1>
+
+                                                                                                                      <script type="module">
+                                                                                                                                          import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
+
+                                                                                                                                                              const status = document.getElementById("status");
+                                                                                                                                                                                  const profileLink = document.getElementById("profileLink");
+                                                                                                                                                                                  const profileRoot = document.getElementById("other")
+                                                                                                                                                                                  const topbar = document.querySelector("topbar")
+
+                                                                                                                                                                                                      onAuthStateChanged(auth, user => {
+                                                                                                                                                                                                                                if (user) {
+                                                                                                                                                                                                                                                                status.textContent = `Hello, ${user.displayName || user.email}`;
+                                                                                                                                                                                                                                                                                                    profileLink.href = "/Shoop/profile/";
+                                                                                                                                                                                                                                                                                                    profileRoot.style.display = "block";
+  topbar.style.display = "block";
+                                                                                                                                                                                                                                                                                                                              } else {
+                                                                                                                                                                                                                                                                                                                                                              status.textContent = "Not logged in";
+                                                                                                                                                                                                                                                                                                                                                                                                  profileLink.href = "/Shoop/login/";
+                                                                                                                                                                                                                                                                                                                                                                                                  profileRoot.style.display = "block";
+  topbar.style.display = "block";
+                                                                                                                                                                                                                                                                                                                                                                                                                            }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </body>
 </html>
