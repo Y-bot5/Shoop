@@ -2,6 +2,10 @@ import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
 const profileLink = document.getElementById("profileLink");
 const profileIcon = document.getElementById("avatar");
 const topbar = document.querySelector(".topbar");
+const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches;
+const isDarkMode = !isLightMode;
+const dark = document.querySelector(".dark");
+const light = document.querySelector(".light");
 
 onAuthStateChanged(auth, user => {
   if (user) {
@@ -14,6 +18,14 @@ onAuthStateChanged(auth, user => {
     profileIcon.src = "/Shoop/noProfile.webp";
   }
 });
+
+if (isLightMode) {
+  dark.style.display = "none";
+  light.style.display = "block";
+} if (isDarkMode) {
+  dark.style.display = "block";
+  light.style.display = "none";
+}
 
 menuBtn.onclick = () => {
   alert("Menu coming soon 👀");
