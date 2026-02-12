@@ -6,6 +6,6 @@
 *.JS
 *.md
 *.MD
-!sw.js
+!serviceWorker.js
 !general.js
 !manifest.json
