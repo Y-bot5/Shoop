@@ -50,7 +50,7 @@ self.addEventListener('fetch', (event) => {
                                                                                                     .then((networkResponse) => {
                                                                                                                         // Handle 404 or other server errors here
                                                                                                                                             if (networkResponse.status === 404) {
-                                                                                                                                                                    return caches.match('/404.html');
+                                                                                                                                                                    return caches.match('/Shoop/nopage/');
                                                                                                                                                                                         }
                                                                                                                                                                                                             return networkResponse;
                                                                                                                                                                                                                             })
