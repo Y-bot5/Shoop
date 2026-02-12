@@ -1,5 +1,6 @@
-const CACHE_NAME = 'assets-v0.3.0';
+const CACHE_NAME = 'assets-v0.4.0';
 const FILES = [
+  '/Shoop/404.html',
   '/Shoop/',
   '/Shoop/index.html',
   '/Shoop/styles.css',
@@ -17,7 +18,7 @@ const FILES = [
   '/Shoop/login/styles.css',
   'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js',
   'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js',
-  '/Shoop/profile.js',
+  '/Shoop/general.js',
   '/Shoop/profile/',
   '/Shoop/profile/index.html',
   '/Shoop/profile/styles.css',
@@ -25,28 +26,6 @@ const FILES = [
   '/Shoop/registerServiceWorker.js',
   'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js'
 ]
-
-self.addEventListener('fetch', (event) => {
-    // We only care about GET requests for the cache
-    if (event.request.method !== 'GET') return;
-
-    event.respondWith(
-        caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-
-            // If not in cache, try the network
-            return fetch(event.request).catch(() => {
-                // If network fails AND it's a page navigation, show offline.html
-                if (event.request.mode === 'navigate') {
-                    return caches.match('/Shoop/offline.html');
-                }
-            });
-        })
-    );
-});
-
 
 self.addEventListener('install', function(event) {
     console.log('[Service Worker] Installed.');
@@ -56,6 +35,34 @@ self.addEventListener('install', function(event) {
         self.skipWaiting();
     }));
 });
+
+self.addEventListener('fetch', (event) => {
+        if (event.request.method !== 'GET') return;
+
+            event.respondWith(
+                    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+                                if (cachedResponse) {
+                                                return cachedResponse;
+                                                            }
+
+                                                                        // Try the network
+                                                                                    return fetch(event.request)
+                                                                                                    .then((networkResponse) => {
+                                                                                                                        // Handle 404 or other server errors here
+                                                                                                                                            if (networkResponse.status === 404) {
+                                                                                                                                                                    return caches.match('/404.html');
+                                                                                                                                                                                        }
+                                                                                                                                                                                                            return networkResponse;
+                                                                                                                                                                                                                            })
+                                                                                                                                                                                                                                            .catch(() => {
+                                                                                                                                                                                                                                                                // This ONLY runs if the network is totally down
+                                                                                                                                                                                                                                                                                    if (event.request.mode === 'navigate') {
+                                                                                                                                                                                                                                                                                                            return caches.match('/Shoop/offline.html');
+                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                                                                                        })
+                                                                                                                                                                                                                                                                                                                                                            );
+                                                                                                                                                                                                                                                                                                                                                            });
 
 self.addEventListener('activate', function(event) {
     console.log('[Service Worker] Activating and cleaning up...');
