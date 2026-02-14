@@ -56,42 +56,5 @@
                                                                                                                                                                                                                                                                                                                                                                                                                                                 });
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </script>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                     </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <div class="dark" style="display:none">
-    <header class="topbar" style="display:none">
-  <button id="menuBtn" aria-label="Menu">☰</button>
-
-  <a id="profileLink">
-    <img
-      id="avatar"
-      src="/Shoop/noProfile.webp"
-      alt="Profile"
-    >
-  </a>
-</header>
-
-<div id="other" style="display:none"></div>
-                                                                                                  <h1 id="status">Loading…</h1>
-
-                                                                                                                      <script type="module">
-                                                                                                                                          import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
-
-                                                                                                                                                              const status = document.getElementById("status");
-                                                                                                                                                                                  const profileLink = document.getElementById("profileLink");
-                                                                                                                                                                                  const profileRoot = document.getElementById("other")
-
-                                                                                                                                                                                                      onAuthStateChanged(auth, user => {
-                                                                                                                                                                                                                                if (user) {
-                                                                                                                                                                                                                                                                status.textContent = `Hello, ${user.displayName || user.email}`;
-                                                                                                                                                                                                                                                                                                    profileLink.href = "/Shoop/profile/";
-                                                                                                                                                                                                                                                                                                    profileRoot.style.display = "block";
-                                                                                                                                                                                                                                                                                                                              } else {
-                                                                                                                                                                                                                                                                                                                                                              status.textContent = "Not logged in";
-                                                                                                                                                                                                                                                                                                                                                                                                  profileLink.href = "/Shoop/login/";
-                                                                                                                                                                                                                                                                                                                                                                                                  profileRoot.style.display = "block";
-                                                                                                                                                                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </script>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </body>
 </html>
