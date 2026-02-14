@@ -18,6 +18,11 @@
 
 <script src="/Shoop/registerServiceWorker.js" defer></script>
     <script type="module" src="/Shoop/general.js"></script>
+    <script>
+import { loadTheme } from "/Shoop/general.js";
+
+loadTheme();
+    </script>
 </head>
             <body>
                 <header class="topbar" style="display:none">
@@ -58,7 +63,7 @@ import {
   updateProfile
 } from "/Shoop/firebase.js";
 
-import { toggleTheme, loadTheme } from "/Shoop/general.js";
+import { toggleTheme } from "/Shoop/general.js";
 
 /* --- Elements --- */
 const avatar = document.getElementById("avatar");
@@ -81,8 +86,6 @@ const changeScheme = document.getElementById("changeScheme");
 const params = new URLSearchParams(location.search);
 const viewedUsername = params.get("u");
 const mode = params.get("mode");
-
-loadTheme();
 
 if (!user.displayName) {
     const fallback = generateUsername(user.email);
