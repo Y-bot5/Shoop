@@ -1,4 +1,4 @@
-const CACHE_NAME = 'assets-v0.5.0';
+const CACHE_NAME = 'v1.1.6-beta';
 const FILES = [
   '/Shoop/nopage/',
   '/Shoop/nopage/index.html',
