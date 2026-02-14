@@ -2,10 +2,7 @@ import { auth, onAuthStateChanged } from "/Shoop/firebase.js";
 const profileLink = document.getElementById("profileLink");
 const profileIcon = document.getElementById("avatar");
 const topbar = document.querySelector(".topbar");
-const isDarkMode = window.matchMedia('(prefers-color-scheme: Dark)').matches;
-const isLightMode = !isDarkMode;
-const dark = document.querySelector(".dark");
-const light = document.querySelector(".light");
+const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const other = document.querySelector(".other")
 
 onAuthStateChanged(auth, user => {
@@ -21,12 +18,21 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-if (isLightMode) {
-  dark.style.display = "none";
-  light.style.display = "block";
-} if (isDarkMode) {
-  dark.style.display = "block";
-  light.style.display = "none";
+export function toggleTheme() {
+  const root = document.documentElement;
+
+  const next =
+    root.dataset.theme === "dark" ? "light" : "dark";
+
+  root.dataset.theme = next;
+  localStorage.setItem("theme", next);
+}
+
+export function loadTheme() {
+  const saved =
+    localStorage.getItem("theme") || (isDarkMode ? "dark" : "light");
+
+  document.documentElement.dataset.theme = saved;
 }
 
 menuBtn.onclick = () => {
