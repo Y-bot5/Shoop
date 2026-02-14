@@ -1,11 +1,11 @@
-*.js
-*.json
-*.JSON
-*.env
-*.ENV
-*.JS
-*.md
-*.MD
-!serviceWorker.js
-!general.js
-!manifest.json
+# *.js
+# *.json
+# *.JSON
+# *.env
+# *.ENV
+# *.JS
+# *.md
+# *.MD
+# !serviceWorker.js
+# !general.js
+# !manifest.json
