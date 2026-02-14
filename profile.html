@@ -98,24 +98,38 @@ onAuthStateChanged(auth, user => {
 
   const myUsername = user.displayName;
 
-  // Ensure ?u=
-  if (!viewedUsername) {
+  if (!mode) {
+    if (!viewedUsername) {
+      if (mode === "edit") {
+      location.replace(
+        `/Shoop/profile?u=${encodeURIComponent(myUsername)}&mode=edit`
+      )
+    } else {
     location.replace(
-      `/Shoop/profile/?u=${encodeURIComponent(myUsername)}`
+      `/Shoop/profile?u=${encodeURIComponent(myUsername)}&mode=view`
     );
-    return;
+    }
   }
-
+  else if (mode === "edit") {
+      location.replace(
+        `/Shoop/profile?u=${encodeURIComponent(viewedUsername)}&mode=edit`
+      )
+    } else {
+    location.replace(
+      `/Shoop/profile?u=${encodeURIComponent(viewedUsername)}&mode=view`
+    );
+  }
+}
   // Block editing other users
   if (mode === "edit" && viewedUsername !== myUsername) {
     location.replace(
-      `/Shoop/profile/?u=${encodeURIComponent(viewedUsername)}`
+      `/Shoop/profile?u=${encodeURIComponent(viewedUsername)}&mode=view`
     );
     return;
   }
 
   /* --- VIEW MODE --- */
-  if (mode !== "edit") {
+  if (mode === "view") {
     viewProfile.style.display = "block";
     editProfile.style.display = "none";
 
@@ -131,7 +145,7 @@ onAuthStateChanged(auth, user => {
   }
 
   /* --- EDIT MODE --- */
-  else {
+  else if (mode === "edit") {
     viewProfile.style.display = "none";
     editProfile.style.display = "block";
 
@@ -143,6 +157,10 @@ onAuthStateChanged(auth, user => {
 
     editName.value = user.displayName || "";
     editPhoto.value = user.photoURL || "";
+  } else {
+    location.replace(
+      `/Shoop/profile?u=${encodeURIComponent(myUsername)}`
+    );
   }
 });
   
@@ -151,20 +169,20 @@ document.title =
       ? "Edit Profile | Shoop"
       : viewedUsername === myUsername
         ? "Your Profile | Shoop"
-        : `${viewedUsername} | Shoop`;
+        : `${viewedUsername}'s Profile | Shoop`;
 
 /* --- Buttons --- */
 
 // Enter edit mode
 editBtn?.addEventListener("click", () => {
   const u = encodeURIComponent(viewedUsername);
-  location.href = `/Shoop/profile/?u=${u}&mode=edit`;
+  location.href = `/Shoop/profile?u=${u}&mode=edit`;
 });
 
 // Cancel edit
 cancelBtn?.addEventListener("click", () => {
   const u = encodeURIComponent(viewedUsername);
-  location.href = `/Shoop/profile/?u=${u}`;
+  location.href = `/Shoop/profile?u=${u}`;
 });
 
 // Save changes
@@ -175,7 +193,7 @@ saveBtn?.addEventListener("click", async () => {
   });
 
   const u = encodeURIComponent(editName.value.trim());
-  location.href = `/Shoop/profile/?u=${u}`;
+  location.href = `/Shoop/profile?u=${u}`;
 });
 
 // Logout
