@@ -42,7 +42,7 @@
 
   <input id="editName" placeholder="Display name">
   <input id="editPhoto" placeholder="Photo URL">
-  <button id="changeScheme" onclick="import { toggleTheme } from /Shoop/general.js; toggleTheme();"
+  <button id="changeScheme">Change color scheme</button>
 
   <button id="saveBtn">Save</button>
   <button id="cancelBtn">Cancel</button>
@@ -57,6 +57,8 @@ import {
   signOut,
   updateProfile
 } from "/Shoop/firebase.js";
+
+import { toggleTheme, loadTheme } from "/Shoop/general.js";
 
 /* --- Elements --- */
 const avatar = document.getElementById("avatar");
@@ -74,10 +76,13 @@ const editName = document.getElementById("editName");
 const editPhoto = document.getElementById("editPhoto");
 const saveBtn = document.getElementById("saveBtn");
 const cancelBtn = document.getElementById("cancelBtn");
+const changeScheme = document.getElementById("changeScheme");
 /* --- URL params --- */
 const params = new URLSearchParams(location.search);
 const viewedUsername = params.get("u");
 const mode = params.get("mode");
+
+loadTheme();
 
 if (!user.displayName) {
     const fallback = generateUsername(user.email);
@@ -159,7 +164,7 @@ onAuthStateChanged(auth, user => {
     editPhoto.value = user.photoURL || "";
   } else {
     location.replace(
-      `/Shoop/profile?u=${encodeURIComponent(myUsername)}`
+      `/Shoop/profile?u=${encodeURIComponent(myUsername)}&mode=view`
     );
   }
 });
@@ -172,6 +177,11 @@ document.title =
         : `${viewedUsername}'s Profile | Shoop`;
 
 /* --- Buttons --- */
+
+// Change colour scheme
+changeScheme?.addEventListener("click", () => {
+    toggleTheme();
+})
 
 // Enter edit mode
 editBtn?.addEventListener("click", () => {
