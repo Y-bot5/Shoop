@@ -1,33 +1,33 @@
 const CACHE_NAME = 'v1.1.8-beta';
 const FILES = [
-  '/Shoop/nopage/',
-  '/Shoop/nopage/index.html',
-  '/Shoop/offline.html',
-  '/Shoop/offline',
-  '/Shoop/',
-  '/Shoop/index.html',
-  '/Shoop/index',
-  '/Shoop/styles.css',
-  '/Shoop/home',
-  '/Shoop/home.html',
-  '/Shoop/home/styles.css',
-  '/Shoop/icon-192.png',
-  '/Shoop/icon-512.png',
-  '/Shoop/noProfile.webp',
-  '/Shoop/manifest.json',
-  '/Shoop/icon-32.png',
-  '/Shoop/firebase.js',
-  '/Shoop/login',
-  '/Shoop/login.html',
-  '/Shoop/login/styles.css',
-  'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js',
-  'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js',
-  '/Shoop/general.js',
-  '/Shoop/profile.html',
-  '/Shoop/profile',
-  '/Shoop/profile/styles.css',
-  '/Shoop/registerServiceWorker.js',
-  'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js'
+    '/Shoop/nopage/',
+    '/Shoop/nopage/index.html',
+    '/Shoop/offline.html',
+    '/Shoop/offline',
+    '/Shoop/',
+    '/Shoop/index.html',
+    '/Shoop/index',
+    '/Shoop/styles.css',
+    '/Shoop/home',
+    '/Shoop/home.html',
+    '/Shoop/home/styles.css',
+    '/Shoop/icon-192.png',
+    '/Shoop/icon-512.png',
+    '/Shoop/noProfile.webp',
+    '/Shoop/manifest.json',
+    '/Shoop/icon-32.png',
+    '/Shoop/firebase.js',
+    '/Shoop/login',
+    '/Shoop/login.html',
+    '/Shoop/login/styles.css',
+    'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js',
+    'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js',
+    '/Shoop/general.js',
+    '/Shoop/profile.html',
+    '/Shoop/profile',
+    '/Shoop/profile/styles.css',
+    '/Shoop/registerServiceWorker.js',
+    'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js'
 ]
 
 self.addEventListener('install', function(event) {
@@ -40,36 +40,36 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('fetch', (event) => {
-        if (event.request.method !== 'GET') return;
+    if (event.request.method !== 'GET') return;
 
-            event.respondWith(
-                    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
-                                if (cachedResponse) {
-                                                return cachedResponse;
-                                                            }
+    event.respondWith(
+        caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
+            if (cachedResponse) {
+                return cachedResponse;
+            }
 
-                                                                        // Try the network
-                                                                                    return fetch(event.request)
-                                                                                                    .then((networkResponse) => {
-                                                                                                                        // Handle 404 or other server errors here
-                                                                                                                                            if (networkResponse.status === 404) {
-                                                                                                                                                                    return caches.match('/Shoop/nopage/');
-                                                                                                                                                                                        }
-                                                                                                                                                                                                            return networkResponse;
-                                                                                                                                                                                                                            })
-                                                                                                                                                                                                                                            .catch(() => {
-                                                                                                                                                                                                                                                                // This ONLY runs if the network is totally down
-                                                                                                                                                                                                                                                                                    if (event.request.mode === 'navigate') {
-                                                                                                                                                                                                                                                                                                            return caches.match('/Shoop/offline.html');
-                                                                                                                                                                                                                                                                                                                                }
-                                                                                                                                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                                                                                                                                        })
-                                                                                                                                                                                                                                                                                                                                                            );
-                                                                                                                                                                                                                                                                                                                                                            });
+            // Try the network
+            return fetch(event.request)
+                .then((networkResponse) => {
+                    // Handle 404 or other server errors here
+                    if (networkResponse.status === 404) {
+                        return caches.match('/Shoop/nopage/');
+                    }
+                    return networkResponse;
+                })
+                .catch(() => {
+                    // This ONLY runs if the network is totally down
+                    if (event.request.mode === 'navigate') {
+                        return caches.match('/Shoop/offline.html');
+                    }
+                });
+        })
+    );
+});
 
 self.addEventListener('activate', function(event) {
     console.log('[Service Worker] Activating and cleaning up...');
-    
+
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
             return Promise.all(
