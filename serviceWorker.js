@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v1.1.8-beta';
+const CACHE_NAME = 'v1.1.9-beta';
 const FILES = [
     '/Shoop/nopage/',
     '/Shoop/nopage/index.html',
@@ -27,7 +27,8 @@ const FILES = [
     '/Shoop/profile',
     '/Shoop/profile/styles.css',
     '/Shoop/registerServiceWorker.js',
-    'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js'
+    'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js',
+    '/Shoop/profile/main.js'
 ]
 
 self.addEventListener('install', function(event) {

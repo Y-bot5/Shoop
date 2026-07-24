@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Profile | Shoop</title>
+
+  <link rel="icon" href="/Shoop/images/icon-32.png" sizes="32x32">
+  <link rel="icon" href="/Shoop/images/icon-192.png" sizes="192x192">
+  <link rel="icon" href="/Shoop/images/icon-512.png" sizes="512x512">
+
+  <link rel="manifest" href="/Shoop/manifest.json">
+
+  <link rel="stylesheet" href="/Shoop/profile/styles.css">
+  <link rel="stylesheet" href="/Shoop/styles.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="/Shoop/registerServiceWorker.js" defer></script>
+  <script type="module" src="/Shoop/general.js"></script>
+  <script>
+    import { loadTheme } from "/Shoop/general.js";
+
+    loadTheme();
+  </script>
+</head>
+
+<body>
+  <header class="topbar" style="display:none">
+    <button id="menuBtn" aria-label="Menu">☰</button>
+
+    <a id="profileLink">
+      <img id="avatar" src="/Shoop/images/noProfile.webp" alt="Profile">
+    </a>
+  </header>
+
+  <h1 id="status">Loading…</h1>
+  <div class="other" style="display:none">
+    <p>Name: <span id="name"></span></p>
+    <p>Email: <span id="email"></span></p>
+
+    <div id="viewProfile" style="display:none">
+      <button id="editBtn">Edit profile</button>
+    </div>
+
+    <div id="editProfile" style="display:none">
+      <h2>Edit profile</h2>
+
+      <input id="editName" placeholder="Display name">
+      <input id="editPhoto" placeholder="Photo URL">
+      <button id="changeScheme">Change color scheme</button>
+
+      <button id="saveBtn">Save</button>
+      <button id="cancelBtn">Cancel</button>
+      <button id="logoutBtn">Log out</button>
+    </div>
+  </div>
+
+  <script type="module" href="/Shoop/profile/main.js"></script>
+</body>
+
+</html>
