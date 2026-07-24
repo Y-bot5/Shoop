@@ -1,87 +1,86 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
   <meta charset="utf-8">
-    <title>Login | Shoop</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | Shoop</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <link rel="stylesheet" href="/Shoop/login/styles.css">
-          <link rel="stylesheet" href="/Shoop/styles.css">
+  <link rel="stylesheet" href="/Shoop/login/styles.css">
+  <link rel="stylesheet" href="/Shoop/styles.css">
 
-        <!-- Favicons -->
-          <link rel="icon" href="/Shoop/icon-32.png" sizes="32x32">
-            <link rel="icon" href="/Shoop/icon-192.png" sizes="192x192">
-            <link rel="icon" href="/Shoop/icon-512.png" sizes="512x512">
+  <!-- Favicons -->
+  <link rel="icon" href="/Shoop/icon-32.png" sizes="32x32">
+  <link rel="icon" href="/Shoop/icon-192.png" sizes="192x192">
+  <link rel="icon" href="/Shoop/icon-512.png" sizes="512x512">
 
-            <link rel="manifest" href="/Shoop/manifest.json">
-            
-<script src="/Shoop/registerServiceWorker.js" defer></script>
-    <script type="module" src="/Shoop/general.js"></script>
-            </head>
-            <body>
-              <header class="topbar">
-  <button id="menuBtn" aria-label="Menu">☰</button>
+  <link rel="manifest" href="/Shoop/manifest.json">
 
-  <a id="profileLink">
-    <img
-      id="avatar"
-      src="/Shoop/noProfile.webp"
-      alt="Profile"
-    >
-  </a>
-</header>
+  <script src="/Shoop/registerServiceWorker.js" defer></script>
+  <script type="module" src="/Shoop/general.js"></script>
+</head>
 
-<div class="other"></div>
-            <h1>Login</h1>
+<body>
+  <header class="topbar">
+    <button id="menuBtn" aria-label="Menu">☰</button>
 
-            <form id="loginForm">
-              <input id="emailInput" type="email" placeholder="Email" autofill="email" required>
-                <input id="passwordInput" type="password" placeholder="Password" autofill="current-password" required>
-                  <button type="submit">Login / Sign up</button>
-                  </form>
+    <a id="profileLink">
+      <img id="avatar" src="/Shoop/noProfile.webp" alt="Profile">
+    </a>
+  </header>
 
-                  <script type="module">
-import {
-  auth,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  updateProfile,
-  onAuthStateChanged
-} from "/Shoop/firebase.js";
+  <div class="other"></div>
+  <h1>Login</h1>
 
-loginForm.onsubmit = async (e) => {
-  e.preventDefault();
+  <form id="loginForm">
+    <input id="emailInput" type="email" placeholder="Email" autofill="email" required>
+    <input id="passwordInput" type="password" placeholder="Password" autofill="current-password" required>
+    <button type="submit">Login / Sign up</button>
+  </form>
 
-  
-      function generateUsername(email) {
-  const base = email.split("@")[0].toLowerCase().replace(/[^a-z0-9]/g, "");
-  const rand = Math.floor(Math.random() * 10000);
-  return `${base}-${rand}`;
+  <script type="module">
+    import {
+      auth,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      updateProfile,
+      onAuthStateChanged
+    } from "/Shoop/firebase.js";
 
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
+    loginForm.onsubmit = async (e) => {
+      e.preventDefault();
 
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
 
-  } catch (err) {
-    // User doesn't exist → create account
-    if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      async function generateUsername(email) {
+        const base = email.split("@")[0].toLowerCase().replace(/[^a-z0-9]/g, "");
+        const rand = Math.floor(Math.random() * 10000);
+        return `${base}-${rand}`;
 
-  const username = generateUsername(email);
-}
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
 
-      // STEP 2A — set display name
-      await updateProfile(cred.user, {
-        displayName: email.split("@")[0],
-        photoURL: "/Shoop/noProfile.webp"
-      });
-    }
-  }
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
 
-  location.replace("/Shoop/home/");
-};
-</script>
-                                                                                              </body>
-                                                                                              </html>
+        } catch (err) {
+          // User doesn't exist → create account
+          if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+            const cred = await createUserWithEmailAndPassword(auth, email, password);
+
+            const username = generateUsername(email);
+          }
+
+          // STEP 2A — set display name
+          await updateProfile(cred.user, {
+            displayName: email.split("@")[0],
+            photoURL: "/Shoop/noProfile.webp"
+          });
+        }
+      }
+
+      location.replace("/Shoop/home/");
+    };
+  </script>
+</body>
+
+</html>
